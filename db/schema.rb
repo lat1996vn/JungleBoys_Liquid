@@ -30,11 +30,11 @@ ActiveRecord::Schema.define(version: 20181009001838) do
   end
 
   create_table "ratings", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.integer "user_id", null: false
-    t.integer "room_id", null: false
-    t.integer "stars",   null: false
+    t.integer "comment_id", null: false
+    t.integer "room_id",    null: false
+    t.integer "stars",      null: false
+    t.index ["comment_id"], name: "index_ratings_on_comment_id", using: :btree
     t.index ["room_id"], name: "index_ratings_on_room_id", using: :btree
-    t.index ["user_id"], name: "index_ratings_on_user_id", using: :btree
   end
 
   create_table "rooms", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -76,7 +76,7 @@ ActiveRecord::Schema.define(version: 20181009001838) do
   add_foreign_key "comments", "users"
   add_foreign_key "likes", "comments"
   add_foreign_key "likes", "users"
+  add_foreign_key "ratings", "comments"
   add_foreign_key "ratings", "rooms"
-  add_foreign_key "ratings", "users"
   add_foreign_key "rooms", "users"
 end

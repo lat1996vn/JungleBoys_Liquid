@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   get 'home/index'
   root 'home#index'
 
+  post 'rating', as: 'ratings', action: 'create', controller: 'ratings'
+
   resources :rooms, :except => [:index] do 
     resources :comments, :except => [:index] do
       resources :likes, :except => [:index]
@@ -11,6 +13,7 @@ Rails.application.routes.draw do
   
   
   get 'users/:id' => 'users#show', as: 'user', constraints: { id: /[0-9]+/ }
+  get 'rooms', action: :search, controller: 'rooms' 
 
   devise_for :users, controllers: {
     registrations: 'users/registrations',
@@ -26,7 +29,6 @@ Rails.application.routes.draw do
     end
   end  
   
-get 'rooms', action: :search, controller: 'rooms' 
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

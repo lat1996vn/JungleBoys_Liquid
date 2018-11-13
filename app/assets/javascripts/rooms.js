@@ -72,7 +72,7 @@ $(document).on('turbolinks:load', function(){
         }
         
         current_value = id;
-        $('#value').append(current_value)
+        $('#comment_rating_attributes_stars').val(current_value);
     });
     
     rating_children.mouseover(function(e){

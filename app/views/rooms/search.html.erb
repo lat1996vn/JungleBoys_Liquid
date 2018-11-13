@@ -1,12 +1,4 @@
 <h1>Found <%= @rooms.size %> result(s)</h1>
-<table>
-  <thead>
-    <tr>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
       <% @rooms.each do |room| %>
         <div class="col-md-6">
           <div class="card" style="width: 100%;">
@@ -31,6 +23,3 @@
           </div>
         </div>
       <% end %>
-     </tr>       
-  </tbody>
-</table>

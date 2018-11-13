@@ -78,13 +78,21 @@
 
         <% if user_signed_in? %>
             <%= form_for [@room, @comment], html: {class: "form-inline"}, remote:true do |f| %>
+                
             <div class="form-group" style="width:85%">
                 <%= f.hidden_field :user_id, value: current_user.id %>
                 <%= f.hidden_field :room_id, value: @room.id %>
                 <%= f.text_field :text_content, :class => "comment-box form-control", 
                     :required => true, :autocomplete => 'off', placeholder: "Write a review" %>
-                
-                    <%= f.submit "Comment", id: "submit", class: "ml-auto btn btn-primary" %>
+
+                    <%= f.fields_for :rating, Rating.new do |rating_form| %>
+                    <p>
+                        <%= rating_form.hidden_field :user_id, value: current_user.id %>
+                        <%= rating_form.hidden_field :room_id, value: @room.id %>    
+                        <%= rating_form.hidden_field :stars %>                    
+                    </p>
+                    <% end %>
+                <%= f.submit "Comment", id: "submit", class: "ml-auto btn btn-primary" %>
             </div>
     
             <% end %>
@@ -108,6 +116,7 @@
                     <a href="#" style="font-weight:bold"><%= comment.user.username %></a>
                     <p><%= comment.created_at %></p>
                 </div>
+<<<<<<< HEAD
                 <div></div>
 
                 <% if user_signed_in? %>
@@ -135,6 +144,18 @@
                 </div>
                 <% end %>
                
+=======
+                <div class="col-md-5">
+                    <% for i in 1..5 %>
+                        <% if i > comment.rating.stars %>
+                            <i class="fas fa-star"></i>
+                            <% next %>                        
+                        <% end %>
+                        <i class="fas fa-star rated"></i>
+                    <% end %>
+    
+                </div>
+>>>>>>> efc156f249d6d59560fa671fe42a9b54fd121358
             </div>
             <p><%= comment.text_content %></p>
             <a href="#"></a>
