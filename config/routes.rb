@@ -4,8 +4,11 @@ Rails.application.routes.draw do
   root 'home#index'
 
   resources :rooms, :except => [:index] do 
-    resources :comments, :except => [:index]
+    resources :comments, :except => [:index] do
+      resources :likes, :except => [:index]
+    end
   end
+  
   
   get 'users/:id' => 'users#show', as: 'user', constraints: { id: /[0-9]+/ }
 
