@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 20181009001838) do
 
-  create_table "comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.integer  "user_id",                  null: false
     t.integer  "room_id",                  null: false
     t.string   "text_content", limit: 500, null: false
@@ -22,14 +22,14 @@ ActiveRecord::Schema.define(version: 20181009001838) do
     t.index ["user_id"], name: "index_comments_on_user_id", using: :btree
   end
 
-  create_table "likes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "likes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.integer "user_id",    null: false
     t.integer "comment_id", null: false
     t.index ["comment_id"], name: "index_likes_on_comment_id", using: :btree
     t.index ["user_id"], name: "index_likes_on_user_id", using: :btree
   end
 
-  create_table "ratings", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "ratings", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.integer "comment_id", null: false
     t.integer "room_id",    null: false
     t.integer "stars",      null: false
@@ -37,7 +37,7 @@ ActiveRecord::Schema.define(version: 20181009001838) do
     t.index ["room_id"], name: "index_ratings_on_room_id", using: :btree
   end
 
-  create_table "rooms", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "rooms", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.integer "user_id",                                       null: false
     t.string  "room_name",       limit: 100,                   null: false
     t.string  "address",         limit: 100,                   null: false
@@ -54,7 +54,7 @@ ActiveRecord::Schema.define(version: 20181009001838) do
     t.index ["user_id"], name: "index_rooms_on_user_id", using: :btree
   end
 
-  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.string   "email",                             default: "",    null: false
     t.string   "encrypted_password",                default: "",    null: false
     t.string   "reset_password_token"

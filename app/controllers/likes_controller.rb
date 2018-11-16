@@ -1,24 +1,11 @@
 class LikesController < ApplicationController
  
-  # GET /likes
-  # GET /likes.json
-  def index
-    @likes = Like.all
-  end
-
-  # GET /likes/1
-  # GET /likes/1.json
-  def show
-  end
 
   # GET /likes/new
   def new
     @like = Like.new
   end
 
-  # GET /likes/1/edit
-  def edit
-  end
 
   # POST /likes
   # POST /likes.json
@@ -27,8 +14,8 @@ class LikesController < ApplicationController
 
     respond_to do |format|
       if @like.save
-        format.html { redirect_to @like, notice: 'Like was successfully created.' }
-        format.json { render :show, status: :created, location: @like }
+        format.html { redirect_to @comment, notice: 'Like was successfully created.' }
+        
       else
         format.html { render :new }
         format.json { render json: @like.errors, status: :unprocessable_entity }
@@ -36,12 +23,11 @@ class LikesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /likes/1
-  # PATCH/PUT /likes/1.json
   def update
     respond_to do |format|
       if @like.update(like_params)
         format.html { redirect_to @like, notice: 'Like was successfully updated.' }
+        format.js   { }
         format.json { render :show, status: :ok, location: @like }
       else
         format.html { render :edit }
@@ -53,21 +39,15 @@ class LikesController < ApplicationController
   # DELETE /likes/1
   # DELETE /likes/1.json
   def destroy
+    @like = Like.find(params[:id])
     @like.destroy
-    respond_to do |format|
-      format.html { redirect_to likes_url, notice: 'Like was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+
   end
   
   def wish_by? user
     wishlists.exists? user_id: user
   end
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_like
-      @like = Like.find(params[:id])
-    end
+
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params

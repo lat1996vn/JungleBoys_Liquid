@@ -2,6 +2,7 @@ class CommentsController < ApplicationController
     def new
         @comment = Comment.new
         @comment.rating.build
+        @comment.like.build
     end
     
     def create
@@ -21,6 +22,6 @@ class CommentsController < ApplicationController
 
     private
     def post_params
-        params.require(:comment).permit(:room_id, :user_id, :text_content, rating_attributes: [:room_id, :comment_id, :stars])
+        params.require(:comment).permit(:room_id, :user_id, :text_content, rating_attributes: [:room_id, :comment_id, :stars], like_attributes: [:user_id, :comment_id])
     end
 end

@@ -117,9 +117,7 @@ $(document).on('turbolinks:load', function(){
     },
       bind: function() {
         VoteWidget.settings.$btn.click(function(){
-          if (! $(this).hasClass('complete')) {
-                VoteWidget.bumpCount();
-          }
+        VoteWidget.bumpCount();
           $(this).toggleClass('complete');
           VoteWidget.toggleText();  
     

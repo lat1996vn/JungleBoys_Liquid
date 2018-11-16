@@ -7,9 +7,13 @@ Rails.application.routes.draw do
 
   resources :rooms, :except => [:index] do 
     resources :comments, :except => [:index] do
-      resources :likes, :except => [:index]
+      resources :likes, only: [:index, :create]
     end
   end
+  
+  delete  'like/index', as: 'likes', action: 'destroy', controller: 'likes'
+  
+  resources :likes, only: [:destroy]
   
   
   get 'users/:id' => 'users#show', as: 'user', constraints: { id: /[0-9]+/ }

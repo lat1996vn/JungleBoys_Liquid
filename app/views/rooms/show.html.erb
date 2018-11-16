@@ -1,5 +1,4 @@
 
-
 <!-- Room's images slide -->
 <div id="MyCarousel" class="carousel slide" data-ride="carousel">
   <ul class="carousel-indicators">
@@ -77,6 +76,7 @@
         <p id="value"></p>
 
         <% if user_signed_in? %>
+        
             <%= form_for [@room, @comment], html: {class: "form-inline"}, remote:true do |f| %>
                 
             <div class="form-group" style="width:85%">
@@ -116,7 +116,6 @@
                     <a href="#" style="font-weight:bold"><%= comment.user.username %></a>
                     <p><%= comment.created_at %></p>
                 </div>
-<<<<<<< HEAD
                 <div></div>
 
                 <% if user_signed_in? %>
@@ -124,17 +123,18 @@
                     <!-- a href="/users/edit" class="btn btn-info btn-block" ><i class="far fa-thumbs-up"></i></a-->
                     <% if comment.like_by? current_user %>
                       <% like = Like.find_by_comment_id_and_user_id(comment.id, current_user.id) %>
-                      <%= form_for like, html: {method: :delete}, remote: true do |f| %>
-                        <button type="submit" class="btn add-to-wish">
-                          <i class="fa fa-times"></i>
-                          <%= t("like.remove") %>
-                        </button>
+                      <%= form_for like, html: {method: :delete} do |f| %>
+                          <%= f.hidden_field :id, value: like.id %>
+                            <button type="destroy" class="btn add-to-wish">
+                           <i class="fa fa-times"></i>
+                           <%= t("like.delete") %>
+                           </button>
                       <% end %>
                     <% else %>
-                      <%= form_for [@room, comment,@like],html: {class: "form-inline"}, remote: true do |f| %>
+                      <%=form_for [@room, comment,Like.new], remote: true do |f| %>
                         <%= f.hidden_field :user_id, value: current_user.id %>
                         <%= f.hidden_field :comment_id, value: comment.id %>
-                        <button type="submit" class="btn add-to-wish">
+                        <button type="create" class="btn add-to-wish">
                           <i class='fa fa-heart-o'></i>
                           <%= t("like.create") %>
                         </button>
@@ -144,7 +144,6 @@
                 </div>
                 <% end %>
                
-=======
                 <div class="col-md-5">
                     <% for i in 1..5 %>
                         <% if i > comment.rating.stars %>
@@ -155,7 +154,6 @@
                     <% end %>
     
                 </div>
->>>>>>> efc156f249d6d59560fa671fe42a9b54fd121358
             </div>
             <p><%= comment.text_content %></p>
             <a href="#"></a>
