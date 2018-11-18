@@ -38,6 +38,18 @@ class RoomsController < ApplicationController
         # @room.show
     end
 
+    def accept
+        @room = Room.find(params[:id])
+        @room.update_attributes(:is_approved => 1)
+    end
+    
+    def destroy
+        @room = Room.find(params[:id])
+        @room.destroy
+        flash.notice="Room '#{@room.room_name}' was deleted"
+        redirect_to home_index_path
+    end
+    
     private
     
     def post_params

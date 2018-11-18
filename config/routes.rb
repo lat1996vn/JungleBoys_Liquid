@@ -9,7 +9,8 @@ Rails.application.routes.draw do
     resources :comments, :except => [:index] do
     end
   end
-  
+  post 'rooms/:id', action: :accept, controller: 'rooms'
+  delete 'rooms/:id', action: :reject, controller: 'rooms'
   get 'users/:id' => 'users#show', as: 'user', constraints: { id: /[0-9]+/ }
   get 'rooms', action: :search, controller: 'rooms' 
 

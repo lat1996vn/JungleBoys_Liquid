@@ -1,5 +1,7 @@
 <br>
+
 <% if user_signed_in? %>
+    <% if !current_user.is_admin? %>
     <div class="row">
       <div class="offset-md-1">
       <%= link_to new_room_path(), class: "btn btn-info btn-lg btn-add-room" do %>
@@ -8,6 +10,9 @@
       <% end %>
       </div>
     </div>
+    <% else %>
+     <%= render "admin/pending_rooms" %>
+    <% end %>
 <% end %>
 <div class="row">
   <div class="col-md-8 offset-md-1">
@@ -22,6 +27,7 @@
     <div class="row">
       
       <% @rooms.each do |room| %>
+        <% if room.is_approved? %>
         <div class="col-md-4">
           <div class="card border-0" style="width: 100%;">
             <!--<div class="card-body">-->
@@ -53,6 +59,7 @@
             <!--</div>-->
           </div>
         </div>
+        <% end %>
       <% end %>
       
     </div>
@@ -60,9 +67,11 @@
     <%= paginate @rooms, theme: 'twitter-bootstrap-3' %>
     <br>
   </div>
-  <div class="col-md-2">
+  <% if user_signed_in? && !current_user.is_admin? %>
+    <div class="col-md-2">
     <h2>Top</h2>
     <% @top.each do |top| %>
+    <% if room.is_approved? %>
     <div class="card" style="width: 100%;">
       <%= image_tag(top.pictures[0], :alt=>'Room image', :class => 'index-top-img') %>
       <div class="card-body">
@@ -83,8 +92,10 @@
         </p>
       </div>
     </div>
+    <% end %>
     <br>
     <% end %>
     
   </div>
+  <% end %>
 </div>
