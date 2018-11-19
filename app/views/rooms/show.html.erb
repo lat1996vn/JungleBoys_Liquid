@@ -21,6 +21,10 @@
     <span class="sr-only">Next</span>
   </a>
 </div>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8e8d89fe0a5956e5f30e6a9ca819bac1b4c05ff2
 
 <div class="row mt-3">
     <div class="offset-md-1 col-md-5">
@@ -69,89 +73,89 @@
             <% end %>
             <!-- -->
         <hr />
-
-    <h2 id="review_amount"><%= @comments.size == 0 ? 0 : @comments.size %> Reviews</h2>
     
-    <div id="comment_form">
-    <% if user_signed_in? %>
-        <% if current_user.comments.where(:room_id => @room.id).blank? %>
-            <h2 id="your_rating">
-                <i id="1" class="fas fa-star"></i>
-                <i id="2" class="fas fa-star"></i>
-                <i id="3" class="fas fa-star"></i>
-                <i id="4" class="fas fa-star"></i>
-                <i id="5" class="fas fa-star"></i>
-            </h2>
-            
-            <p id="value"></p>
-            
-            <%= form_for [@room, @comment], html: {class: "form-inline"}, remote:true do |f| %>
+        <h2 id="review_amount"><%= @comments.size == 0 ? 0 : @comments.size %> Reviews</h2>
+        
+        <div id="comment_form">
+        <% if user_signed_in? && !current_user.is_admin? %>
+            <% if current_user.comments.where(:room_id => @room.id).blank? %>
+                <h2 id="your_rating">
+                    <i id="1" class="fas fa-star"></i>
+                    <i id="2" class="fas fa-star"></i>
+                    <i id="3" class="fas fa-star"></i>
+                    <i id="4" class="fas fa-star"></i>
+                    <i id="5" class="fas fa-star"></i>
+                </h2>
                 
-            <div class="form-group" style="width:85%">
-                <%= f.hidden_field :user_id, value: current_user.id %>
-                <%= f.hidden_field :room_id, value: @room.id %>
-                <%= f.text_field :text_content, :class => "comment-box form-control", 
-                    :required => true, :autocomplete => 'off', placeholder: "Write a review" %>
-                    <%= f.fields_for :rating, Rating.new do |rating_form| %>
-                    <p>
-                        <%= rating_form.hidden_field :user_id, value: current_user.id %>
-                        <%= rating_form.hidden_field :room_id, value: @room.id %>    
-                        <%= rating_form.hidden_field :stars %>                    
-                    </p>
-                    <% end %>
-                <%= f.submit "Comment", id: "submit", class: "ml-auto btn btn-primary" %>
-            </div>
+                <p id="value"></p>
+                
+                <%= form_for [@room, @comment], html: {class: "form-inline"}, remote:true do |f| %>
+                    
+                <div class="form-group" style="width:85%">
+                    <%= f.hidden_field :user_id, value: current_user.id %>
+                    <%= f.hidden_field :room_id, value: @room.id %>
+                    <%= f.text_field :text_content, :class => "comment-box form-control", 
+                        :required => true, :autocomplete => 'off', placeholder: "Write a review" %>
+                        <%= f.fields_for :rating, Rating.new do |rating_form| %>
+                        <p>
+                            <%= rating_form.hidden_field :user_id, value: current_user.id %>
+                            <%= rating_form.hidden_field :room_id, value: @room.id %>    
+                            <%= rating_form.hidden_field :stars %>                    
+                        </p>
+                        <% end %>
+                    <%= f.submit "Comment", id: "submit", class: "ml-auto btn btn-primary" %>
+                </div>
+                <% end %>
             <% end %>
         <% end %>
-    <% end %>
-    </div>
-    <br>       
-            
-    <div id="comments">
-        <% @comments.each do |comment| %>
-        <div id="comment_<%= comment.id %>">
-            <div class="row">
-                
-                <div class="col-md-1">
-                    <% if comment.user.user_pic.present? %>
-                    <%= image_tag(comment.user.user_pic, :height=>'50px', :style => 'border-radius: 50%') %>
-                    <% else %>
-                    <%= image_tag("/user.png", :height=>'50px', :style => 'border-radius: 50%') %>
-                    <% end %>
-                </div>
-                <div class="col-md-5">
-                    <a href="#" style="font-weight:bold"><%= comment.user.username %></a>
-                    <br>
-                    <p style="font-size: 0.9rem"><%= comment.created_at %><p>
-                </div>
-                <div class="col-md-4">
-                    <% for i in 1..5 %>
-                        <% if i > comment.rating.stars %>
-                            <i class="fas fa-star"></i>
-                            <% next %>                        
-                        <% end %>
-                        <i class="fas fa-star rated"></i>
-                    <% end %>
-    
-                </div>
-                <div class="col-md-2">
-                    <% if user_signed_in? && current_user.id == comment.user_id %>
-                        <i class="fas fa-edit right-corner">
-                            <%= link_to 'Edit', edit_room_comment_path(@room, comment), class: "right-corner", method: :update %>
-                        </i>
-                        <i class="fas fa-trash-alt right-corner">
-                            <%= link_to 'Delete', room_comment_path(@room, comment), method: :delete,
-                            remote: true, data: { confirm: 'Are you sure?' } %>
-                        </i>
-                    <% end %>
-                </div>
-            </div>
-            <p class="offset-md-1"><%= comment.text_content %></p>
-        <hr />
         </div>
-        <% end %>
-    </div>
-
+        <br>       
+                
+        <div id="comments">
+            <% @comments.each do |comment| %>
+            <div id="comment_<%= comment.id %>">
+                <div class="row">
+                    
+                    <div class="col-md-1">
+                        <% if comment.user.user_pic.present? %>
+                        <%= image_tag(comment.user.user_pic, :height=>'50px', :style => 'border-radius: 50%') %>
+                        <% else %>
+                        <%= image_tag("/user.png", :height=>'50px', :style => 'border-radius: 50%') %>
+                        <% end %>
+                    </div>
+                    <div class="col-md-5">
+                        <a href="#" style="font-weight:bold"><%= comment.user.username %></a>
+                        <br>
+                        <p style="font-size: 0.9rem"><%= comment.created_at %><p>
+                    </div>
+                    <div class="col-md-4">
+                        <% for i in 1..5 %>
+                            <% if i > comment.rating.stars %>
+                                <i class="fas fa-star"></i>
+                                <% next %>                        
+                            <% end %>
+                            <i class="fas fa-star rated"></i>
+                        <% end %>
+        
+                    </div>
+                    <div class="col-md-2">
+                        <% if user_signed_in? && current_user.id == comment.user_id %>
+                            <i class="fas fa-edit right-corner">
+                                <%= link_to 'Edit', edit_room_comment_path(@room, comment), class: "right-corner", method: :update %>
+                            </i>
+                            <i class="fas fa-trash-alt right-corner">
+                                <%= link_to 'Delete', room_comment_path(@room, comment), method: :delete,
+                                remote: true, data: { confirm: 'Are you sure?' } %>
+                            </i>
+                        <% end %>
+                    </div>
+                </div>
+                <p class="offset-md-1"><%= comment.text_content %></p>
+            <hr />
+            </div>
+            <% end %>
+        </div>
+       
     </div>
     <div class="col-md-3">
         <div class="card">
@@ -176,4 +180,25 @@
         </div>
     </div>
 </div>
+<div class="row">
+     <div class="col-12 text-center">
+        <% if user_signed_in? && current_user.is_admin? %>
+            <% if !@room.is_approved? %>
+            <button class="btn btn-primary">
+                 <%= link_to "Accept", @room, :method => :accept %>
+                 </button>
+            <button class="btn btn-alert">
+                 <%= link_to "Reject", @room, :method => :delete %>
+                 
+            </button>
+            <% else %>
+            <button class="btn btn-alert">
+                 <%= link_to "Delete", @room, :method => :delete %>
+                 
+            </button>
+            <% end %>
+        <% end %>
+    </div>
+</div>
+<br>
 

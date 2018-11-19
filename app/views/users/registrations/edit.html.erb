@@ -48,7 +48,7 @@
 
   </div>
     <div>
-      <%= f.file_field :user_pic, :id => "upload", :onchange => "loadFile(event)"  %>
+      <%= f.file_field :user_pic, :accept=> "image/png,image/gif,image/jpeg", :id => "upload", :onchange => "loadFile(event)"  %>
     </div>
   </div>
   

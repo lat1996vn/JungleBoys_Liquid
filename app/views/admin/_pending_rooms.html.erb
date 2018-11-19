@@ -1,0 +1,48 @@
+<div class="row">
+  <div class="col-md-8 offset-md-1">
+    <h2>List Pending Rooms</h2>
+
+    <div class="row">
+      
+      <% @rooms.each do |room| %>
+        <% if !room.is_approved? %>
+        <div class="col-md-4">
+          <div class="card border-0" style="width: 100%;">
+            <!--<div class="card-body">-->
+             <%= image_tag(room.pictures[0], :alt=>'Room image', :width=>"100%", :class => "index-room-img") %>
+             <ul class="homepage-info">
+                <h5 style="font-weight: bold"><%= room.room_name %></h5>
+                <li><%= room.address %></li>
+                <li><%= room.comments.count %> Reviews</li>
+                 <!--to fix-->
+                <li><%= link_to "More detail", room_path(room.id) %></li>
+                
+              <br>
+              
+              <li>
+                <% if !room.ratings.blank? %>
+                  <% for i in 1..5 %>
+                      <% if i > room.ratings.average(:stars) %>
+                      <i class="fas fa-star"></i>
+                      <% else %>
+                      <i class="fas fa-star rated"></i>
+                      <% end %>
+                  <% end %>
+                  <%= number_with_precision(room.ratings.average(:stars), :precision => 1) %>
+                  <% else %>
+                No ratings.
+                <% end %>
+              </li>
+              </ul>
+            <!--</div>-->
+          </div>
+        </div>
+        <% end %>
+      <% end %>
+      
+    </div>
+    <br>
+    <%= paginate @rooms, theme: 'twitter-bootstrap-3' %>
+    <br>
+  </div>
+</div>
