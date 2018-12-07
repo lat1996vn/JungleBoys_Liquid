@@ -161,7 +161,7 @@
                     <i class="fas fa-star rated"></i>
                     <% end %>
                 <% end %>
-                <%= number_with_precision(@room.ratings.average(:stars), :precision => 1) %> by <%= @room.ratings.count %> users.
+                <%= number_with_precision(@room.ratings.average(:stars), :precision => 1) %> by <%= @room.ratings.count %> user(s).
                 <% else %>
                 No ratings.
                 <% end %>
